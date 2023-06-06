@@ -9,18 +9,16 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
        <link rel="stylesheet" href="https://use.fontwesome.com/reases/v5.8.1/css/all.css"  integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-
-    <title>Movies API</title>
+       <title>Movies API</title>
 </head>
 <body>
     <div style="margin: 24px;">
         <nav class="navbar navbar-inverse navbar-stick.top">
             <div class="container">
-        <a class="navbar-drand" style="color: blueviolet;" href="index.html.html">Inicio</a>       
                 <ul class="nav navbar-nav">
                     <li>
                         <li class="active">
-                        <a href="index.html">inicio</a>
+                            <a class="navbar-drand" style="color: blueviolet;" href="index.html.html">Inicio</a>    
                     </li>
                     <li>
                         <a href="menu.html">menu</a>
@@ -139,11 +137,11 @@
 </style>
         <script>
         //En esta línea se define la URL de la API para obtener la lista de películas.
-const API_URL =  'https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=3fd2be6f0c70a2a598f084ddfb75487c&page=1&#39;'
+const API_URL =  'https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=3fd2be6f0c70a2a598f084ddfb75487c&page=1&#39';
 //Esta línea define la URL de la API para obtener las imágenes de las películas.
-const IMG_PATH = 'https://image.tmdb.org/t/p/w1280&#39;'
+const IMG_PATH =  'https://image.tmdb.org/t/p/w1280&#39';
 //En esta línea se define la URL de la API para buscar películas.
-const SEARCH_API = 'https://api.themoviedb.org/3/search/movie?api_key=3fd2be6f0c70a2a598f084ddfb75487c&query="&#39;'
+const SEARCH_API =  'https://api.themoviedb.org/3/search/movie?api_key=3fd2be6f0c70a2a598f084ddfb75487c&query="&#39';
 
         //En las siguientes tres lineas se obtienen los elememtos HTML con los que interactua el codigo
         const main =document.getElementById('main');
@@ -158,29 +156,159 @@ const SEARCH_API = 'https://api.themoviedb.org/3/search/movie?api_key=3fd2be6f0c
             showMovies(data.result);
         }
         //Esta funcion crea los elementos HTML para mostrar cada pelicula en la lista. Utiliza la informacion de la pelicula para crear los elementos y luego los agrega al DOM
-        function showMovies(movies){
+        function showMovies(movie){
           main.innerHTML='';
           movies.forEach((movie) => {  
-          conts {title, poster_path, vote_averge,overview, release_date} = movie;
+          const {title, poster_path, vote_averge,overview, release_date} = movie;
           const movieEl=document.createElement('div');  
           movieEl.classList.add('movie');
-          movieEl.innerHTML = '<img src=' ${IMG_PATH + poster_path}"alt =" ${title}
-        <div class="movie-info">
-        <h3>${title}</h3>
-            <span class="${getClassByRate(vote_average)}">${vote_average}</span>
-           </div>
-    
-            <div class="overview">
-            <h3> overview </h3>
-            ${overview}
-            <h3> Release Date</h3>
-            ${release_date}</div>
-      
-    main.appendChild(movieEl);
-    })
- }
- //Esta funcion 
+                movieEl.innerHTML = `
+                <img src="${IMG_PATH + poster_path}" alt="${title}"
+                <div class = "movie-info">
+                    <h3>${title}</h3>
+                        <span class="${getClassByRate(vote_average)}">${vote_average}</span>
+                </div>
+                <div class="overview">
+                    <h3> Overview </h3>
+                            ${Overview}
+                            <h3>Release Date</h3>
+                            ${release_date}</div>`;
+                main.appendChild(movieEl);
+            })
+        }
+ //Esta funcion devuelve la clase CSS correspondiene para el puntaje de la pelicula. La clase se utiliza para mostrar un color diferente segun el punteje
+        
+        function getClassByRate(vote){
+            if(vote>=8){
+             return 'green';
+             }
+            else if(vore>=5){
+                return 'orange';
+            }else{
+                return 'red';
+            } 
+        }
+    form.addEventListener('submit', (e) =>{
+        e.preventDefault();
+        const searchTerm = search.value;
+        if(searchTerm && searchTerm !== ''){
+            getMovies(SEARCH_API + searchTerm)
+            search.value = '';
+        }else{
+            window.location.reload();
+        }
+    });
+    </script>
+
+
+    <div id="footer"></div>
+   <script>
+    $(function(){
+        $("#footer").load("/TMD/footer.html");
+    });
+   </script>
+
+
+  <style>
+    footer{
+    background-color: rgb(21, 232, 172);
+    padding: 40px;
+}
+.container{
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.footer-content{
+    display: flex;
+    flex-wrap: wrap;
+}
+.footer-section{
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+.about{
+    text-align: center;
+}
+.about h2{
+    margin-bottom: 20px;
+}
+.about p{
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+.about h1{
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    color: white;
+}
+.contact-links{
+    display: flex;
+    justify-content: center;
+}
+.contact-links a{
+    display: inline-block;
+    color: #fff;
+    font-size: 24px;
+    margin: 0 10px;
+    transition: all 0.3s ease;
+}
+.contact-links a:hover{
+    transform: translateY(-7px);
+}
+  </style>
+
+
+<footer>
+
+    <div class="container">
+        <div class="footer-content">
+            <div class="fotter-section about">
+
+
+    <h2>Contactame</h2>
+    <p>si estas interesado en contactarme,puedes hacerlo a atraves de cualquiera de las siguientes 
+        redes Sociales:</p>
+        <div class="contact-links">
+        <a href="http://www.facebook.com/miperfil" 
+        target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="http://www.instagram.com/miperfil" 
+        target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="http://www.twitter.com/miperfil" 
+        target="_blank"><i class="fab fa-twitter"></i></a>
+        <a href="http://www.discord.com/miperfil" 
+        target="_blank"><i class="fab fa-discord"></i></a>
+        <a href="http://www.pinterest.com/miperfil" 
+        target="_blank"><i class="fab fa-pinterest"></i></a>
+        <a href="http://www.linkedin.com/miperfil" 
+        target="_blank"><i class="fab fa-linkedin"></i></a>
+        </div>
+        </div>
+       </div>
+     </div>
+           
+
+
+<script>
+    //este siguiente codigo es para que los enlaces se abran en una nueva pestaña
+    const redessociales = document.querySelectorAll('.contact-links');
+    redessociales.forEach(link =>{
+        link.addEventListener('click', e => {
+            e.preventDefault();
+            window.open(link.href, '_blank');
+        });
+    });
+
+</script>
+</footer>
+</footer>
+        
+    </body>
+    </html>
 
 
 
-        </script>
+  
